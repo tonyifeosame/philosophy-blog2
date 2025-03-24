@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Post Details</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .post-details {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.05);
+    }
+    .post-details h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .post-details .post-date {
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+    .post-details img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+    .post-details p {
+      line-height: 1.7;
+      font-size: 1.1rem;
+    }
+    .post-tags {
+      margin-top: 20px;
+    }
+    .post-tags span {
+      display: inline-block;
+      background: #eee;
+      color: #555;
+      padding: 6px 12px;
+      margin-right: 8px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+    .back-btn {
+      display: block;
+      margin: 30px auto 0;
+      text-align: center;
+      background: #f2545b;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      width: fit-content;
+    }
+    .back-btn:hover {
+      background: #d8434d;
+    }
+    .vote-box {
+      margin-top: 30px;
+      display: flex;
+      gap: 15px;
+    }
+    .vote-box button {
+      padding: 10px 16px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #f1f1f1;
+    }
+    .vote-box button:hover {
+      background: #e0e0e0;
+    }
+    .vote-box button.active {
+      background: #f2545b;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="post-details" id="postContent">
+      <!-- Post content will be injected here -->
+    </div>
+    <a class="back-btn" href="index.html">← Back to Blog</a>
+  </div>
+
+  <script>
+    const defaultPosts = [
+      {
+        title: "Understanding Stoicism",
+        image: "https://via.placeholder.com/800x400",
+        excerpt: "Explore the teachings of Marcus Aurelius and Epictetus.",
+        category: "Philosophy",
+        tags: ["Stoicism", "Ancient"],
+        date: "2024-12-01",
+        content: "Stoicism is a school of Hellenistic philosophy that teaches the development of self-control and fortitude..."
+      },
+      {
+        title: "Mindful Living in Modern Times",
+        image: "https://via.placeholder.com/800x400",
+        excerpt: "Practical ways to live mindfully in a digital age.",
+        category: "Life",
+        tags: ["Mindfulness", "Wellness"],
+        date: "2024-12-18",
+        content: "Living mindfully involves being present in each moment and fully engaging with your experiences..."
+      }
+    ];
+
+    function getPostFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (!id) return null;
+
+      const [type, index] = id.split("-");
+      const idx = parseInt(index);
+
+      if (type === "default") {
+        return defaultPosts[idx];
+      } else if (type === "custom") {
+        const customPosts = JSON.parse(localStorage.getItem("customPosts")) || [];
+        return customPosts[idx];
+      }
+
+      return null;
+    }
+
+    const post = getPostFromURL();
+    const container = document.getElementById("postContent");
+
+    if (post) {
+      const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+
+      container.innerHTML = `
+  <h1>${post.title}</h1>
+  <div class="post-date">Published on ${formattedDate}</div>
+  <img src="${post.image}" alt="${post.title}" />
+  <p>${post.content || post.excerpt}</p>
+  ${post.link ? `<p><a href="${post.link}" target="_blank" class="btn" style="margin-top:10px;display:inline-block;">Read Full Article</a></p>` : ""}
+  <div class="post-tags">
+    ${post.tags.map(tag => `<span>${tag}</span>`).join('')}
+  </div>
+  <div class="vote-box">
+    <button id="likeBtn">👍 Like (<span id="likeCount">0</span>)</button>
+    <button id="dislikeBtn">👎 Dislike (<span id="dislikeCount">0</span>)</button>
+  </div>
+`;
+
+    } else {
+      container.innerHTML = `<p>Post not found.</p>`;
+    }
+
+    function setupVoting(postId) {
+      const likeBtn = document.getElementById("likeBtn");
+      const dislikeBtn = document.getElementById("dislikeBtn");
+      const likeCount = document.getElementById("likeCount");
+      const dislikeCount = document.getElementById("dislikeCount");
+
+      const voteData = JSON.parse(localStorage.getItem("postVotes") || "{}");
+      const votes = voteData[postId] || { likes: 0, dislikes: 0, voted: null };
+
+      likeCount.textContent = votes.likes;
+      dislikeCount.textContent = votes.dislikes;
+
+      if (votes.voted === "like") likeBtn.classList.add("active");
+      if (votes.voted === "dislike") dislikeBtn.classList.add("active");
+
+      likeBtn.addEventListener("click", () => {
+        if (votes.voted === "like") return;
+        if (votes.voted === "dislike") votes.dislikes--;
+        votes.likes++;
+        votes.voted = "like";
+        updateVotes();
+      });
+
+      dislikeBtn.addEventListener("click", () => {
+        if (votes.voted === "dislike") return;
+        if (votes.voted === "like") votes.likes--;
+        votes.dislikes++;
+        votes.voted = "dislike";
+        updateVotes();
+      });
+
+      function updateVotes() {
+        voteData[postId] = votes;
+        localStorage.setItem("postVotes", JSON.stringify(voteData));
+        likeCount.textContent = votes.likes;
+        dislikeCount.textContent = votes.dislikes;
+        likeBtn.classList.toggle("active", votes.voted === "like");
+        dislikeBtn.classList.toggle("active", votes.voted === "dislike");
+      }
+    }
+
+    const fullId = new URLSearchParams(window.location.search).get("id");
+    if (fullId) setupVoting(fullId);
+  </script>
+  
+  
+</body>
+</html>

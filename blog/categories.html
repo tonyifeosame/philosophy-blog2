@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Browse Categories - Philosophy Blog</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      padding: 40px 20px;
+    }
+    .category-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .category-card:hover {
+      background-color: #f2545b;
+      color: white;
+      border-color: transparent;
+    }
+    .site-header, .site-footer {
+      padding: 20px;
+      background: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">Philosophy</div>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="categories.html" class="active">Categories</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <h2 style="text-align:center; margin-top: 40px;">Explore Categories</h2>
+      <div class="category-grid" id="categoryList">
+        <!-- JS will populate categories here -->
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Philosophy Blog. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const defaultPosts = [
+      {
+        title: "Understanding Stoicism",
+        category: "Stoicism"
+      },
+      {
+        title: "Mindful Living in Modern Times",
+        category: "Mindfulness"
+      },
+      {
+        title: "The Nature of Being",
+        category: "Metaphysics"
+      },
+      {
+        title: "The Ethics of AI",
+        category: "Ethics"
+      }
+    ];
+
+    const customPosts = JSON.parse(localStorage.getItem("customPosts")) || [];
+    const allPosts = [...defaultPosts, ...customPosts];
+
+    const categories = [...new Set(allPosts.map(post => post.category))];
+    const listContainer = document.getElementById("categoryList");
+
+    categories.forEach(cat => {
+      const card = document.createElement("div");
+      card.className = "category-card";
+      card.textContent = cat;
+      card.onclick = () => {
+        window.location.href = `index.html?category=${encodeURIComponent(cat)}`;
+      };
+      listContainer.appendChild(card);
+    });
+  </script>
+</body>
+</html>

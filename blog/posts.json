@@ -1,0 +1,66 @@
+[
+    {
+      "title": "The Nature of Reality: What is Real?",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "Explore metaphysical questions on the nature of existence and being.",
+      "category": "Metaphysics",
+      "tags": ["Being", "Reality"],
+      "date": "2024-12-01",
+      "link": "#"
+    },
+    {
+      "title": "Can We Really Know Anything?",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "A deep dive into epistemology — the theory of knowledge.",
+      "category": "Epistemology",
+      "tags": ["Knowledge", "Belief"],
+      "date": "2024-12-10",
+      "link": "#"
+    },
+    {
+      "title": "The Good Life: What Should We Value?",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "An ethical exploration of what it means to live a moral life.",
+      "category": "Ethics",
+      "tags": ["Virtue", "Morality"],
+      "date": "2025-01-05",
+      "link": "#"
+    },
+    {
+      "title": "Is Free Will an Illusion?",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "Philosophy of mind meets metaphysics in this classic problem.",
+      "category": "Philosophy of Mind",
+      "tags": ["Free Will", "Consciousness"],
+      "date": "2025-01-20",
+      "link": "#"
+    },
+    {
+      "title": "Existence Precedes Essence",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "Sartre and the foundations of existentialist thought.",
+      "category": "Existentialism",
+      "tags": ["Sartre", "Freedom"],
+      "date": "2025-02-10",
+      "link": "#"
+    },
+    {
+      "title": "The Trolley Problem Explained",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "A famous ethical dilemma and its implications.",
+      "category": "Ethics",
+      "tags": ["Utilitarianism", "Decision Theory"],
+      "date": "2025-03-01",
+      "link": "#"
+    },
+    {
+      "title": "Why Logic Matters in Philosophy",
+      "image": "https://via.placeholder.com/400x250",
+      "excerpt": "An introduction to logic and valid reasoning.",
+      "category": "Logic",
+      "tags": ["Deduction", "Inference"],
+      "date": "2025-03-10",
+      "link": "#"
+    }
+  ]
+  

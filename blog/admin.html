@@ -1,0 +1,118 @@
+<script>
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.href = "login.html";
+    }
+  });
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin - Add Post</title>
+  <link rel="stylesheet" href="style.css" />
+ <!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyBSIzBeGemieWTnuMb4rHlKVzqY_MVtMKM",
+    authDomain: "philosophy-blog-38b21.firebaseapp.com",
+    projectId: "philosophy-blog-38b21",
+    appId: "1:615043845608:web:default" // You can update appId if needed
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+</script>
+
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+    }
+    .admin-container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    .admin-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .admin-container form input,
+    .admin-container form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .admin-container form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #f2545b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .admin-container form button:hover {
+      background-color: #d8434d;
+    }
+  </style>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem("isAdmin") !== "true") {
+          alert("Access denied. Please log in as admin.");
+          window.location.href = "login.html";
+        }
+      </script>
+      
+  <div class="admin-container">
+    <h2>Add a New Blog Post</h2>
+    <form id="postForm">
+      <input type="text" id="title" placeholder="Post Title" required />
+      <input type="text" id="image" placeholder="Image URL (optional)" />
+      <textarea id="excerpt" placeholder="Short excerpt for the post" required rows="3"></textarea>
+      <input type="text" id="category" placeholder="Category" required />
+      <input type="text" id="tags" placeholder="Tags (comma separated)" />
+      <input type="date" id="date" required />
+      <input type="text" id="link" placeholder="Post Link (optional)" />
+      <button type="submit">Add Post</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("postForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const post = {
+        title: document.getElementById("title").value,
+        image: document.getElementById("image").value || "https://via.placeholder.com/400x250",
+        excerpt: document.getElementById("excerpt").value,
+        category: document.getElementById("category").value,
+        tags: document.getElementById("tags").value.split(',').map(tag => tag.trim()).filter(Boolean),
+        date: document.getElementById("date").value,
+        link: document.getElementById("link").value || "#"
+      };
+
+      const posts = JSON.parse(localStorage.getItem("customPosts")) || [];
+      posts.push(post);
+      localStorage.setItem("customPosts", JSON.stringify(posts));
+
+      alert("Post added successfully!");
+      this.reset();
+    });
+  </script>
+</body>
+</html>

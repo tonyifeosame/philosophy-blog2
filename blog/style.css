@@ -1,0 +1,232 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Helvetica Neue', sans-serif;
+    line-height: 1.6;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  /* Container */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px 0;
+  }
+  
+  /* Header */
+  .site-header {
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  
+  .site-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #111;
+  }
+  
+  .main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+  }
+  
+  .main-nav a {
+    text-decoration: none;
+    color: #444;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .main-nav a:hover {
+    color: #111;
+  }
+  
+  /* Hero */
+  .hero {
+    background: #111;
+    color: #fff;
+    padding: 60px 0;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .btn {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #f2545b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  .btn:hover {
+    background: #d8434d;
+  }
+  
+  /* Search Bar */
+  .search-bar {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .search-bar input {
+    width: 80%;
+    max-width: 500px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  /* Sort Dropdown */
+  .sort-bar {
+    text-align: center;
+    margin: 10px 0 20px;
+  }
+  
+  .sort-bar select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  /* Category Buttons */
+  .category-filters {
+    text-align: center;
+    margin: 30px 0 20px;
+    flex-wrap: wrap;
+  }
+  
+  .category-filters button {
+    background: #eee;
+    border: none;
+    padding: 10px 16px;
+    margin: 6px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+  }
+  
+  .category-filters button:hover {
+    background: #ccc;
+  }
+  
+  .category-filters button.active {
+    background: #f2545b;
+    color: #fff;
+  }
+  
+  /* Post Grid */
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  /* Post Card */
+  .post-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+  
+  .post-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .post-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .post-content {
+    padding: 20px;
+  }
+  
+  .post-content h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .post-content h2 a {
+    text-decoration: none;
+    color: #222;
+    transition: color 0.3s ease;
+  }
+  
+  .post-content h2 a:hover {
+    color: #f2545b;
+  }
+  
+  .post-content p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .post-date {
+    font-size: 0.85rem;
+    color: #999;
+    margin-bottom: 6px;
+  }
+  
+  /* Tags */
+  .post-tags {
+    margin-top: 10px;
+  }
+  
+  .post-tags span {
+    background: #f1f1f1;
+    padding: 4px 10px;
+    margin: 3px 3px 0 0;
+    display: inline-block;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    color: #555;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .post-tags span:hover {
+    background: #ddd;
+  }
+  
+  /* Footer */
+  .site-footer {
+    background: #111;
+    color: #ccc;
+    text-align: center;
+    padding: 30px 0;
+    font-size: 0.9rem;
+    margin-top: 40px;
+  }
+  

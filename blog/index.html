@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Philosophy Blog</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <style>
+    /* Carousel */
+    .hero-carousel {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      max-height: 600px;
+      min-height: 300px;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+    .hero-carousel {
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: 600px;
+  overflow: hidden;
+}
+
+
+    .carousel-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  transition: opacity 1s ease-in-out;
+  object-fit: cover;
+}
+
+
+    .carousel-slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .carousel-slide h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .carousel-slide p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .carousel-dots span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 6px;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.5;
+      cursor: pointer;
+    }
+
+    .carousel-dots span.active {
+      opacity: 1;
+      background: #f2545b;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      z-index: 1000;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 10px 12px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container">
+      <div class="logo">Philosophy</div>
+      <nav class="main-nav">
+        <ul id="navLinks">
+          <li><a href="index.html">Home</a></li>
+          <li class="dropdown">
+            <a href="#">Categories</a>
+            <div class="dropdown-content" id="navCategoryDropdown"></div>
+          </li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Carousel -->
+  <section class="hero-carousel" id="heroCarousel">
+    <div class="carousel-dots" id="carouselDots"></div>
+  </section>
+
+  <!-- Posts Section -->
+  <section class="posts">
+    <div class="container">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search posts..." />
+      </div>
+      <div class="sort-bar">
+        <label for="sortSelect">Sort by:</label>
+        <select id="sortSelect">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
+      <div class="category-filters" id="categoryFilters"></div>
+      <div class="post-grid" id="postContainer"></div>
+    </div>
+  </section>
+
+ 
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Philosophy Blog. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Main script -->
+  <script src="script.js"></script>
+
+  <!-- Carousel Script -->
+  <script>
+    const heroSlides = [
+      {
+        title: "The Roots of Stoic Thought",
+        subtitle: "Explore ancient wisdom for modern life.",
+        image: "images.jfif"
+      },
+      {
+        title: "Mindful Moments",
+        subtitle: "How to stay present in a digital age.",
+        image: "download.jpg"
+      },
+      {
+        title: "What is Being?",
+        subtitle: "Dive into the depths of metaphysics.",
+        image: "download.jfif"
+      }
+    ];
+
+    const carousel = document.getElementById("heroCarousel");
+    const dotsContainer = document.getElementById("carouselDots");
+
+    heroSlides.forEach((slide, index) => {
+      const slideDiv = document.createElement("div");
+      slideDiv.classList.add("carousel-slide");
+      if (index === 0) slideDiv.classList.add("active");
+
+      slideDiv.style.backgroundImage = `url(${slide.image})`;
+      slideDiv.innerHTML = `<h1>${slide.title}</h1><p>${slide.subtitle}</p>`;
+      carousel.appendChild(slideDiv);
+
+      const dot = document.createElement("span");
+      if (index === 0) dot.classList.add("active");
+      dot.addEventListener("click", () => showSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    let currentSlide = 0;
+    const totalSlides = heroSlides.length;
+    const slides = document.querySelectorAll(".carousel-slide");
+    const dots = document.querySelectorAll(".carousel-dots span");
+
+    function showSlide(index) {
+      slides[currentSlide].classList.remove("active");
+      dots[currentSlide].classList.remove("active");
+      currentSlide = index;
+      slides[currentSlide].classList.add("active");
+      dots[currentSlide].classList.add("active");
+    }
+
+    setInterval(() => {
+      let next = (currentSlide + 1) % totalSlides;
+      showSlide(next);
+    }, 5000);
+  </script>
+
+  <!-- Admin Nav Controls -->
+  <script>
+    const navLinks = document.getElementById("navLinks");
+    const isAdmin = localStorage.getItem("isAdmin") === "true";
+    if (isAdmin) {
+      const addPost = document.createElement("li");
+      addPost.innerHTML = '<a href="admin.html">Add Post</a>';
+      navLinks.appendChild(addPost);
+
+      const logout = document.createElement("li");
+      logout.innerHTML = '<a href="#" id="logoutBtn">Logout</a>';
+      navLinks.appendChild(logout);
+
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("isAdmin");
+        window.location.reload();
+      });
+    }
+  </script>
+
+  <!-- Category Dropdown Fill -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const defaultPosts = [
+        { title: "Understanding Stoicism", category: "Stoicism" },
+        { title: "Mindful Living in Modern Times", category: "Mindfulness" },
+        { title: "The Nature of Being", category: "Metaphysics" },
+        { title: "The Ethics of AI", category: "Ethics" }
+      ];
+
+      const customPosts = JSON.parse(localStorage.getItem("customPosts")) || [];
+      const allPosts = [...defaultPosts, ...customPosts];
+      const allCategories = [...new Set(allPosts.map(p => p.category))];
+      const navDropdown = document.getElementById("navCategoryDropdown");
+
+      if (navDropdown) {
+        allCategories.forEach(cat => {
+          const link = document.createElement("a");
+          link.href = `index.html?category=${encodeURIComponent(cat)}`;
+          link.textContent = cat;
+          navDropdown.appendChild(link);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
